@@ -1,0 +1,33 @@
+{
+  "name": "simple-library-subsystem",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node src/index.js",
+    "start:dev": "nodemon --inspect src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/imryan85/simple-library-subsystem.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/imryan85/simple-library-subsystem/issues"
+  },
+  "homepage": "https://github.com/imryan85/simple-library-subsystem#readme",
+  "dependencies": {
+    "@bull-board/koa": "^3.9.0",
+    "@koa/router": "^10.1.1",
+    "bull": "^4.2.0",
+    "dotenv": "^11.0.0",
+    "koa": "^2.13.4",
+    "koa-bodyparser": "^4.3.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  }
+}
