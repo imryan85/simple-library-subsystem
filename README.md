@@ -2,6 +2,8 @@
 
 Web App / API Repository: https://github.com/imryan85/simple-library-app
 
+Elasticsearch/Logstash/Kibana Repository: https://github.com/imryan85/simple-library-elk/
+
 
 ## Description
 
