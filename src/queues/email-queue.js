@@ -1,5 +1,6 @@
 const Queue = require("bull");
 const { processEmail } = require("./email-queue-consumer");
+require('dotenv').config()
 
 const emailQueue = new Queue("email", {
   redis: {
@@ -9,10 +10,12 @@ const emailQueue = new Queue("email", {
   },
 });
 
-emailQueue.process(processEmail);
+emailQueue.process(async (msg) => {
+  return await processEmail(msg.data)
+});
 
-// module.exports.createNewEmail = (msg) => {
-//   emailQueue.add(msg, {
-
-//   });
-// };
+module.exports.createNewEmail = async (msg) => {  
+  await emailQueue.add(msg, {
+    // leave empty opts for now
+  });
+};

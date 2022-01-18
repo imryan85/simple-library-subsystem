@@ -2,8 +2,9 @@ const Koa = require("koa");
 const cors = require('@koa/cors');
 const Router = require("@koa/router");
 
-const { processEmail } = require("./queues/email-queue-consumer");
-const { processOrder } = require("./queues/checkout-queue-consumer");
+const { createNewEmail } = require("./queues/email-queue");
+const { createNewOrder } = require("./queues/checkout-queue");
+const { createOverdueCheck } = require("./queues/overdue-queue");
 
 const app = new Koa();
 const router = new Router();
@@ -26,19 +27,33 @@ router.get("/health", (ctx) => {
 });
 
 router.post("/queue/email", async (ctx) => {
-  await processEmail(ctx.request.body);
-  ctx.body = {
-    message: "Email is queued successfully.",
-    data: ctx.request.body,
-  };
+  try {
+    console.log('/queue/email', ctx.request.body)
+    await createNewEmail(ctx.request.body);
+    ctx.body = {
+      message: "Email is queued successfully.",
+      data: ctx.request.body,
+    };
+  } catch (err) {
+    console.log(err)
+  }
 })
 
 router.post("/queue/checkout", async (ctx) => {
-  await processOrder(ctx.request.body);
+  console.log('/queue/checkout', ctx.request.body)
+  await createNewOrder(ctx.request.body);
   ctx.body = {
     message: "Order placed successfully.",
     data: ctx.request.body,
   };
 })
+
+// router.post("/queue/overdue", async (ctx) => {
+//   await processOrder(ctx.request.body);
+//   ctx.body = {
+//     message: "checking overdue job queued.",
+//     data: ctx.request.body,
+//   };
+// })
 
 app.listen(PORT, () => console.log(`Server up and running on ${PORT}`));
