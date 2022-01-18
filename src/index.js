@@ -4,7 +4,7 @@ const Router = require("@koa/router");
 
 const { createNewEmail } = require("./queues/email-queue");
 const { createNewOrder } = require("./queues/checkout-queue");
-const { createOverdueCheck } = require("./queues/overdue-queue");
+const { createOverdueHandler } = require("./queues/overdue-queue");
 
 const app = new Koa();
 const router = new Router();
@@ -48,12 +48,12 @@ router.post("/queue/checkout", async (ctx) => {
   };
 })
 
-// router.post("/queue/overdue", async (ctx) => {
-//   await processOrder(ctx.request.body);
-//   ctx.body = {
-//     message: "checking overdue job queued.",
-//     data: ctx.request.body,
-//   };
-// })
+router.post("/queue/handleOverdue", async (ctx) => {
+  await createOverdueHandler(ctx.request.body);
+  ctx.body = {
+    message: "handling overdue job queued.",
+    data: ctx.request.body,
+  };
+})
 
 app.listen(PORT, () => console.log(`Server up and running on ${PORT}`));

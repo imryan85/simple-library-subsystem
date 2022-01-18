@@ -11,11 +11,10 @@ const overdueQueue = new Queue("overdue", {
 });
 
 overdueQueue.process(async (msg) => {
-  console.log(msg)
+  return await processJob(msg.data);
 });
 
-module.exports.createOverdueCheck = async (msg) => {
-  await overdueQueue.add(msg, {
-    // leave empty opts for now
-  });
+module.exports.createOverdueHandler = (msg) => {
+  console.log('createOverdueCheck')
+  overdueQueue.add(msg);
 };
